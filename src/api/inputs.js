@@ -20,7 +20,7 @@ Meteor.methods({
 
     Inputs.insert({
       key: keystroke,
-      eventType: 'Key Up',
+      eventType: 'keyUp',
       owner: this.userId,
       articleId: articleId,
       createdAt: new Date()
@@ -36,7 +36,7 @@ Meteor.methods({
 
     Inputs.insert({
       key: keystroke,
-      eventType: 'Key Down',
+      eventType: 'keyDown',
       owner: this.userId,
       articleId: articleId,
       createdAt: new Date()
@@ -52,7 +52,55 @@ Meteor.methods({
 
     Inputs.insert({
       key: keystroke,
-      eventType: 'Key Press',
+      eventType: 'keyPress',
+      owner: this.userId,
+      articleId: articleId,
+      createdAt: new Date()
+    });
+  },
+
+  'inputs.input'(keystroke, articleId) {
+    check(keystroke, String);
+
+    if(!this.userId) {
+      throw new Meteor.Error('not-authorized');
+    }
+
+    Inputs.insert({
+      key: keystroke,
+      eventType: 'input',
+      owner: this.userId,
+      articleId: articleId,
+      createdAt: new Date()
+    });
+  },
+
+  'inputs.compositionStart'(keystroke, articleId) {
+    check(keystroke, String);
+
+    if(!this.userId) {
+      throw new Meteor.Error('not-authorized');
+    }
+
+    Inputs.insert({
+      key: keystroke,
+      eventType: 'compositionStart',
+      owner: this.userId,
+      articleId: articleId,
+      createdAt: new Date()
+    });
+  },
+
+  'inputs.compositionEnd'(keystroke, articleId) {
+    check(keystroke, String);
+
+    if(!this.userId) {
+      throw new Meteor.Error('not-authorized');
+    }
+
+    Inputs.insert({
+      key: keystroke,
+      eventType: 'compositionEnd',
       owner: this.userId,
       articleId: articleId,
       createdAt: new Date()

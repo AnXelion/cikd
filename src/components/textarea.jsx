@@ -17,22 +17,44 @@ export default class TextArea extends Component {
     this.handleKeyPress = this.handleKeyPress.bind(this);
     this.handleKeyUp = this.handleKeyUp.bind(this);
     this.handleKeyDown = this.handleKeyDown.bind(this);
+    this.handleInput = this.handleInput.bind(this);
+    this.handleCompositionStart = this.handleCompositionStart.bind(this);
+    this.handleCompositionEnd = this.handleCompositionEnd.bind(this);
   }
 
   handleChange(event) {
+    // console.log("change: " + event.target.value);
     this.setState({inputValue: event.target.value});
   }
 
   handleKeyPress(event) {
-    Meteor.call('inputs.keyPress', event.key, this.props._id);
+    // console.log(event.key);
+    // Meteor.call('inputs.keyPress', event.key, this.props._id);
   }
 
   handleKeyUp(event) {
-    Meteor.call('inputs.keyUp', event.key, this.props._id);
+    // console.log(event.key);
+    // Meteor.call('inputs.keyUp', event.key, this.props._id);
   }
 
   handleKeyDown(event) {
-    Meteor.call('inputs.keyDown', event.key, this.props._id);
+    // console.log(event.key);
+    // Meteor.call('inputs.keyDown', event.key, this.props._id);
+  }
+
+  handleInput(event) {
+    // console.log("input: " + event.target.value);
+    // Meteor.call('inputs.input', event.key, this.props._id);
+  }
+
+  handleCompositionStart(event) {
+    // console.log(event.data);
+    Meteor.call('inputs.compositionStart', event.data, this.props._id);
+  }
+
+  handleCompositionEnd(event) {
+    // console.log(event.data);
+    Meteor.call('inputs.compositionEnd', event.data, this.props._id);
   }
 
   render() {
@@ -45,6 +67,9 @@ export default class TextArea extends Component {
             onKeyPress={this.handleKeyPress}
             onKeyUp={this.handleKeyUp}
             onKeyDown={this.handleKeyDown}
+            onInput={this.handleInput}
+            onCompositionStart={this.handleCompositionStart}
+            onCompositionEnd={this.handleCompositionEnd}
           >
           </textarea>
         </div>
