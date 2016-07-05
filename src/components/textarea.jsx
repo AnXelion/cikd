@@ -29,22 +29,22 @@ export default class TextArea extends Component {
 
   handleKeyPress(event) {
     // console.log(event.key);
-    // Meteor.call('inputs.keyPress', event.key, this.props._id);
+    Meteor.call('inputs.keyPress', event.key, this.props._id);
   }
 
   handleKeyUp(event) {
     // console.log(event.key);
-    // Meteor.call('inputs.keyUp', event.key, this.props._id);
+    Meteor.call('inputs.keyUp', event.key, this.props._id);
   }
 
   handleKeyDown(event) {
     // console.log(event.key);
-    // Meteor.call('inputs.keyDown', event.key, this.props._id);
+    Meteor.call('inputs.keyDown', event.key, this.props._id);
   }
 
   handleInput(event) {
     // console.log("input: " + event.target.value);
-    // Meteor.call('inputs.input', event.key, this.props._id);
+    Meteor.call('inputs.input', event.target.value, this.props._id);
   }
 
   handleCompositionStart(event) {
