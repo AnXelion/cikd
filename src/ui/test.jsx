@@ -22,17 +22,27 @@ class Test extends Component {
   }
 
   render() {
+    // Whether user logs in
     if (Meteor.userId()) {
-      return (
-        <div>
-          {this.renderArticles()}
-        </div>
-      );
+      if (BrowserDetect.browser == 'Chrome' && BrowserDetect.version > 51) {
+        return (
+          <div>
+            {this.renderArticles()}
+          </div>
+        );
+      }
+      else {
+        return (
+          <div>
+            Please use Chrome with version newer than 51!
+          </div>
+        )
+      }
     }
     else {
       return (
         <div>
-          Plese login!
+          Please login!
         </div>
       );
     }
