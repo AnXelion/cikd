@@ -23,26 +23,23 @@ class Test extends Component {
 
   render() {
     // Whether user logs in
-    if (Meteor.userId()) {
-      if (BrowserDetect.browser == 'Chrome' && BrowserDetect.version > 51) {
+    if (Meteor.userId() && BrowserDetect.browser == 'Chrome' && BrowserDetect.version > 51) {
         return (
           <div>
             {this.renderArticles()}
           </div>
         );
-      }
-      else {
-        return (
-          <div>
-            Please use Chrome with version newer than 51!
-          </div>
-        )
-      }
     }
     else {
       return (
-        <div>
-          Please login!
+        <div className="ui error message">
+          <div className="ui header">
+            There is something you should do before taking the test.
+          </div>
+          <div className="list">
+            <li>Please login.</li>
+            <li>Using Chrome (version >= 51) during the test.</li>
+          </div>
         </div>
       );
     }

@@ -11,7 +11,7 @@ if (Meteor.isServer) {
 }
 
 Meteor.methods({
-  'inputs.keyUp'(keystroke, articleId) {
+  'inputs.keyUp'(keystroke, articleId, os) {
     check(keystroke, String);
 
     if (!this.userId) {
@@ -23,11 +23,12 @@ Meteor.methods({
       eventType: 'keyUp',
       owner: this.userId,
       articleId: articleId,
+      os: os,
       createdAt: new Date()
     });
   },
 
-  'inputs.keyDown'(keystroke, articleId) {
+  'inputs.keyDown'(keystroke, articleId, os) {
     check(keystroke, String);
 
     if (!this.userId) {
@@ -39,11 +40,12 @@ Meteor.methods({
       eventType: 'keyDown',
       owner: this.userId,
       articleId: articleId,
+      os: os,
       createdAt: new Date()
     });
   },
 
-  'inputs.keyPress'(keystroke, articleId) {
+  'inputs.keyPress'(keystroke, articleId, os) {
     check(keystroke, String);
 
     if (!this.userId) {
@@ -55,11 +57,12 @@ Meteor.methods({
       eventType: 'keyPress',
       owner: this.userId,
       articleId: articleId,
+      os: os,
       createdAt: new Date()
     });
   },
 
-  'inputs.input'(keystroke, articleId) {
+  'inputs.input'(keystroke, articleId, os) {
     check(keystroke, String);
 
     if(!this.userId) {
@@ -71,11 +74,12 @@ Meteor.methods({
       eventType: 'input',
       owner: this.userId,
       articleId: articleId,
+      os: os,
       createdAt: new Date()
     });
   },
 
-  'inputs.compositionStart'(keystroke, articleId) {
+  'inputs.compositionStart'(keystroke, articleId, os) {
     check(keystroke, String);
 
     if(!this.userId) {
@@ -87,11 +91,12 @@ Meteor.methods({
       eventType: 'compositionStart',
       owner: this.userId,
       articleId: articleId,
+      os: os,
       createdAt: new Date()
     });
   },
 
-  'inputs.compositionEnd'(keystroke, articleId) {
+  'inputs.compositionEnd'(keystroke, articleId, os) {
     check(keystroke, String);
 
     if(!this.userId) {
@@ -103,6 +108,7 @@ Meteor.methods({
       eventType: 'compositionEnd',
       owner: this.userId,
       articleId: articleId,
+      os: os,
       createdAt: new Date()
     });
   }

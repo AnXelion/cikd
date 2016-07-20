@@ -49,7 +49,11 @@ export default class Admin extends Component {
       }
       else {
         return (
-          <div>You are not a admin!</div>
+          <div className="ui error message">
+            <div className="ui header">
+              You are not an admin!
+            </div>
+          </div>
         )
       }
     }
