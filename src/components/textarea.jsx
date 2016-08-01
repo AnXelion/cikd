@@ -79,7 +79,7 @@ export default class TextArea extends Component {
 }
 
 export default createContainer(() => {
-  Meteor.subscribe('inputs');
+  // Meteor.subscribe('inputs');
 
   return {
     inputs: Inputs.find({}).fetch()
