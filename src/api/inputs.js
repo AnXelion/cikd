@@ -4,11 +4,11 @@ import { check } from 'meteor/check';
 
 export const Inputs = new Mongo.Collection('inputs');
 
-// if (Meteor.isServer) {
-//   Meteor.publish('inputs', function tasksPublication() {
-//     return Inputs.find();
-//   });
-// }
+if (Meteor.isServer) {
+  Meteor.publish('inputs', function tasksPublication() {
+    return Inputs.find();
+  });
+}
 
 Meteor.methods({
   'inputs.keyUp'(keystroke, articleId, os) {
