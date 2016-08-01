@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react';
-import { createContainer } from 'meteor/react-meteor-data';
+// import { createContainer } from 'meteor/react-meteor-data';
 import { Meteor } from 'meteor/meteor';
 
 import { Inputs } from '../api/inputs';
@@ -78,10 +78,10 @@ export default class TextArea extends Component {
   }
 }
 
-export default createContainer(() => {
-  // Meteor.subscribe('inputs');
-
-  return {
-    inputs: Inputs.find({}).fetch()
-  }
-}, TextArea);
+// export default createContainer(() => {
+//   // Meteor.subscribe('inputs');
+//
+//   return {
+//     // inputs: Inputs.find({}).fetch()
+//   }
+// }, TextArea);
