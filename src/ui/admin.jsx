@@ -13,6 +13,7 @@ export default class Admin extends Component {
     this.setState = this.setState.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleDiscard = this.handleDiscard.bind(this);
   }
 
   handleChange(event) {
@@ -22,46 +23,60 @@ export default class Admin extends Component {
   }
 
   handleSubmit(event) {
-    Meteor.call('articles.insert', this.state.inputValue);
 
-    this.setState({inputValue: ''});
+    Meteor.call('articles.insert', this.state.inputValue, function(error, result) {
+      console.log(error);
+      console.log(result);
+    });
+
+    this.setState({
+      inputValue: ''
+    });
+  }
+
+  handleDiscard(event) {
+    this.setState({
+      inputValue: ''
+    });
   }
 
   render() {
-    if (Meteor.userId()) {
-      if (Meteor.user() !== undefined && Meteor.user().profile.role === 'admin') {
-        return (
-          <div className="ui container">
+    if (Meteor.userId() && Meteor.user() !== undefined && Meteor.user().profile.role === 'admin') {
+      return (
+        <div className="ui container">
+          <h4 className="ui top attached header">
+            Add an article
+          </h4>
+          <div className="ui attached segment">
             <div className="ui form">
-              <div className="field">
-                <label>Add Article</label>
+              <div className="ui field">
                 <textarea
                   value={this.state.inputValue}
                   onChange={this.handleChange}>
                 </textarea>
               </div>
-              <button className="ui primary right floated submit button" onClick={this.handleSubmit}>
+
+              <button className={this.state.inputValue != '' ? "ui primary submit button" : "ui primary disabled submit button" } onClick={this.handleSubmit}>
                 Submit
               </button>
+              <button className="ui button" onClick={this.handleDiscard}>
+                Discard
+              </button>
+
             </div>
           </div>
-        )
-      }
-      else {
-        return (
-          <div className="ui error message">
-            <div className="ui header">
-              You are not an admin!
-            </div>
-          </div>
-        )
-      }
-    }
-    else {
-      return (
-        <div>You are not a admin!</div>
+        </div>
       )
     }
 
+    else {
+      return (
+        <div className="ui error message">
+          <div className="ui header">
+            You are not an admin!
+          </div>
+        </div>
+      )
+    }
   }
 }

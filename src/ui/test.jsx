@@ -12,10 +12,14 @@ class Test extends Component {
   renderArticles() {
     return this.props.articles.map((article) => {
       return (
-        <div key={article._id}>
-          <Paragraph {...article} />
-          <TextArea {...article} />
-          <div className="ui horizontal divider"></div>
+        <div className="ui segments" key={article._id}>
+          <div className="ui segment">
+            <Paragraph {...article} />
+          </div>
+          <div className="ui segment">
+            <TextArea {...article} />
+          </div>
+          {/* <div className="ui horizontal divider"></div> */}
         </div>
       );
     });
@@ -23,7 +27,7 @@ class Test extends Component {
 
   render() {
     // Whether user logs in
-    if (Meteor.userId() && BrowserDetect.browser == 'Chrome' && BrowserDetect.version > 51) {
+    if (Meteor.userId() && BrowserDetect.browser == 'Chrome' && BrowserDetect.version >= 51) {
         return (
           <div>
             {this.renderArticles()}
@@ -50,7 +54,7 @@ export default createContainer(() => {
   Meteor.subscribe('articles');
 
   return {
-    articles: Articles.find().fetch(),
+    articles: Articles.find().fetch()
   }
 
 }, Test);

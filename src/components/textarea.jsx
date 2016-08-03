@@ -59,8 +59,6 @@ export default class TextArea extends Component {
 
   render() {
     return (
-      <div className="ui form">
-        <div className="field">
           <textarea
             value={this.state.inputValue}
             onChange={this.handleChange}
@@ -72,8 +70,6 @@ export default class TextArea extends Component {
             onCompositionEnd={this.handleCompositionEnd}
           >
           </textarea>
-        </div>
-      </div>
     );
   }
 }
