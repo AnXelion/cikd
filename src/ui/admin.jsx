@@ -2,6 +2,8 @@ import React, { Component, PropTypes } from 'react';
 import { createContainer } from 'meteor/react-meteor-data';
 import { Meteor } from 'meteor/meteor';
 
+import Header from '../components/header';
+
 export default class Admin extends Component {
   constructor(props) {
     super(props);
@@ -43,26 +45,29 @@ export default class Admin extends Component {
   render() {
     if (Meteor.userId() && Meteor.user() !== undefined && Meteor.user().profile.role === 'admin') {
       return (
-        <div className="ui container">
-          <h4 className="ui top attached header">
-            Add an article
-          </h4>
-          <div className="ui attached segment">
-            <div className="ui form">
-              <div className="ui field">
-                <textarea
-                  value={this.state.inputValue}
-                  onChange={this.handleChange}>
-                </textarea>
+        <div>
+          <Header />
+          <div className="ui container">
+            <h4 className="ui top attached header">
+              Add an article
+            </h4>
+            <div className="ui attached segment">
+              <div className="ui form">
+                <div className="ui field">
+                  <textarea
+                    value={this.state.inputValue}
+                    onChange={this.handleChange}>
+                  </textarea>
+                </div>
+
+                <button className={this.state.inputValue != '' ? "ui primary submit button" : "ui primary disabled submit button" } onClick={this.handleSubmit}>
+                  Submit
+                </button>
+                <button className="ui button" onClick={this.handleDiscard}>
+                  Discard
+                </button>
+
               </div>
-
-              <button className={this.state.inputValue != '' ? "ui primary submit button" : "ui primary disabled submit button" } onClick={this.handleSubmit}>
-                Submit
-              </button>
-              <button className="ui button" onClick={this.handleDiscard}>
-                Discard
-              </button>
-
             </div>
           </div>
         </div>
@@ -71,9 +76,14 @@ export default class Admin extends Component {
 
     else {
       return (
-        <div className="ui error message">
-          <div className="ui header">
-            You are not an admin!
+        <div>
+          <Header />
+          <div className="ui container">
+            <div className="ui error message">
+              <div className="ui header">
+                You are not an admin!
+              </div>
+            </div>
           </div>
         </div>
       )

@@ -5,6 +5,7 @@ import { Meteor } from 'meteor/meteor';
 
 import { Articles } from '../api/articles';
 
+import Header from '../components/header';
 import Paragraph from '../components/paragraph';
 import TextArea from '../components/textarea';
 
@@ -30,19 +31,23 @@ class Test extends Component {
     if (Meteor.userId() && BrowserDetect.browser == 'Chrome' && BrowserDetect.version >= 51) {
         return (
           <div>
+            <Header />
             {this.renderArticles()}
           </div>
         );
     }
     else {
       return (
-        <div className="ui error message">
-          <div className="ui header">
-            There is something you should do before taking the test.
-          </div>
-          <div className="list">
-            <li>Please login.</li>
-            <li>Using Chrome (version >= 51) during the test.</li>
+        <div>
+          <Header />
+          <div className="ui error message">
+            <div className="ui header">
+              There is something you should do before taking the test.
+            </div>
+            <div className="list">
+              <li>Please login.</li>
+              <li>Using Chrome (version >= 51) during the test.</li>
+            </div>
           </div>
         </div>
       );
