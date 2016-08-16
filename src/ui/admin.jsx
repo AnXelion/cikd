@@ -26,10 +26,7 @@ export default class Admin extends Component {
 
   handleSubmit(event) {
 
-    Meteor.call('articles.insert', this.state.inputValue, function(error, result) {
-      console.log(error);
-      console.log(result);
-    });
+    Meteor.call('articles.insert', this.state.inputValue);
 
     this.setState({
       inputValue: ''

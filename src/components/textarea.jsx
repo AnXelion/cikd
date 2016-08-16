@@ -9,7 +9,9 @@ export default class TextArea extends Component {
     super(props);
 
     this.state = {
-      inputValue: ''
+      inputValue: '',
+      submitted: false,
+      savedTypingPatterns: []
     };
 
     this.setState = this.setState.bind(this);
@@ -20,56 +22,143 @@ export default class TextArea extends Component {
     this.handleInput = this.handleInput.bind(this);
     this.handleCompositionStart = this.handleCompositionStart.bind(this);
     this.handleCompositionEnd = this.handleCompositionEnd.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleRestart = this.handleRestart.bind(this);
   }
 
   handleChange(event) {
-    // console.log("change: " + event.target.value);
     this.setState({inputValue: event.target.value});
   }
 
   handleKeyPress(event) {
-    // console.log(event.key);
-    Meteor.call('inputs.keyPress', event.key, this.props._id, BrowserDetect.OS);
+    // Meteor.call('inputs.keyPress', event.key, this.props._id, BrowserDetect.OS);
+    var newSavedTypingPatterns = this.state.savedTypingPatterns.slice();
+    newSavedTypingPatterns.push({
+      key: event.key,
+      eventType: 'keyPress',
+      owner: Meteor.userId(),
+      articleId: this.props._id,
+      os: BrowserDetect.OS,
+      createdAt: new Date()
+    });
+
+    this.setState({savedTypingPatterns: newSavedTypingPatterns});
   }
 
   handleKeyUp(event) {
-    // console.log(event.key);
-    Meteor.call('inputs.keyUp', event.key, this.props._id, BrowserDetect.OS);
+    // Meteor.call('inputs.keyUp', event.key, this.props._id, BrowserDetect.OS);
+    var newSavedTypingPatterns = this.state.savedTypingPatterns.slice();
+    newSavedTypingPatterns.push({
+      key: event.key,
+      eventType: 'keyUp',
+      owner: Meteor.userId(),
+      articleId: this.props._id,
+      os: BrowserDetect.OS,
+      createdAt: new Date()
+    });
+
+    this.setState({savedTypingPatterns: newSavedTypingPatterns});
   }
 
   handleKeyDown(event) {
-    // console.log(event.key);
-    Meteor.call('inputs.keyDown', event.key, this.props._id, BrowserDetect.OS);
+    // Meteor.call('inputs.keyDown', event.key, this.props._id, BrowserDetect.OS);
+    var newSavedTypingPatterns = this.state.savedTypingPatterns.slice();
+    newSavedTypingPatterns.push({
+      key: event.key,
+      eventType: 'keyDown',
+      owner: Meteor.userId(),
+      articleId: this.props._id,
+      os: BrowserDetect.OS,
+      createdAt: new Date()
+    });
+
+    this.setState({savedTypingPatterns: newSavedTypingPatterns});
   }
 
   handleInput(event) {
-    // console.log("input: " + event.target.value);
-    Meteor.call('inputs.input', event.target.value, this.props._id, BrowserDetect.OS);
+    // Meteor.call('inputs.input', event.target.value, this.props._id, BrowserDetect.OS);
+    var newSavedTypingPatterns = this.state.savedTypingPatterns.slice();
+    newSavedTypingPatterns.push({
+      key: event.target.value,
+      eventType: 'input',
+      owner: Meteor.userId(),
+      articleId: this.props._id,
+      os: BrowserDetect.OS,
+      createdAt: new Date()
+    });
   }
 
   handleCompositionStart(event) {
-    // console.log(event.data);
-    Meteor.call('inputs.compositionStart', event.data, this.props._id, BrowserDetect.OS);
+    // Meteor.call('inputs.compositionStart', event.data, this.props._id, BrowserDetect.OS);
+    var newSavedTypingPatterns = this.state.savedTypingPatterns.slice();
+    newSavedTypingPatterns.push({
+      key: event.data,
+      eventType: 'compositionStart',
+      owner: Meteor.userId(),
+      articleId: this.props._id,
+      os: BrowserDetect.OS,
+      createdAt: new Date()
+    });
   }
 
   handleCompositionEnd(event) {
-    // console.log(event.data);
-    Meteor.call('inputs.compositionEnd', event.data, this.props._id, BrowserDetect.OS);
+    // Meteor.call('inputs.compositionEnd', event.data, this.props._id, BrowserDetect.OS);
+    var newSavedTypingPatterns = this.state.savedTypingPatterns.slice();
+    newSavedTypingPatterns.push({
+      key: event.data,
+      eventType: 'compositionEnd',
+      owner: Meteor.userId(),
+      articleId: this.props._id,
+      os: BrowserDetect.OS,
+      createdAt: new Date()
+    });
   }
+
+  handleSubmit() {
+    // this.setState({submitting: true});
+    //
+    // Meteor.call('inputs.submit', this.state.savedTypingPatterns, function(error, result) {
+    //   if (result == "success") {
+    //     this.setState({
+    //       submitting: false,
+    //       submitted: true
+    //     }).bind(this);
+    //   }
+    // });
+
+    Meteor.call('inputs.submit', this.state.savedTypingPatterns);
+    this.setState({submitted: true});
+
+  }
+
+  handleRestart() {
+    this.setState({
+      inputValue: '',
+      submitted: false,
+      savedTypingPatterns: []
+    });
+  }
+
 
   render() {
     return (
-          <textarea
-            value={this.state.inputValue}
-            onChange={this.handleChange}
-            onKeyPress={this.handleKeyPress}
-            onKeyUp={this.handleKeyUp}
-            onKeyDown={this.handleKeyDown}
-            onInput={this.handleInput}
-            onCompositionStart={this.handleCompositionStart}
-            onCompositionEnd={this.handleCompositionEnd}
-          >
-          </textarea>
+        <div className="ui form">
+          <div className= {this.state.submitted == true ? "disabled field" : "field"} >
+            <textarea
+              value={this.state.inputValue}
+              onChange={this.handleChange}
+              onKeyPress={this.handleKeyPress}
+              onKeyUp={this.handleKeyUp}
+              onKeyDown={this.handleKeyDown}
+              onInput={this.handleInput}
+              onCompositionStart={this.handleCompositionStart}
+              onCompositionEnd={this.handleCompositionEnd}
+            >
+            </textarea>
+          </div>
+          <div className={(this.state.inputValue == '') || (this.state.submitted == true) ? "ui primary disabled button" : "ui primary button"} onClick={this.handleSubmit}>{(this.state.submitted == true) ? (<i className="fitted checkmark icon"></i>) : "Sumbit"}</div>
+          <div className={this.state.submitted != true ? "ui button" : "ui disabled  button"} onClick={this.handleRestart}>Restart</div>
+        </div>
     );
   }
 }

@@ -32,7 +32,9 @@ class Test extends Component {
         return (
           <div>
             <Header />
-            {this.renderArticles()}
+            <div className="ui container">
+              {this.renderArticles()}
+            </div>
           </div>
         );
     }
@@ -40,13 +42,15 @@ class Test extends Component {
       return (
         <div>
           <Header />
-          <div className="ui error message">
-            <div className="ui header">
-              There is something you should do before taking the test.
-            </div>
-            <div className="list">
-              <li>Please login.</li>
-              <li>Using Chrome (version >= 51) during the test.</li>
+          <div className="ui container">
+            <div className="ui error message">
+              <div className="ui header">
+                There is something you should do before taking the test.
+              </div>
+              <div className="list">
+                <li>Please login.</li>
+                <li>Using Chrome (version >= 51) during the test.</li>
+              </div>
             </div>
           </div>
         </div>
