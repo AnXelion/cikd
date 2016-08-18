@@ -8,19 +8,19 @@ export default class Paragraph extends Component {
 
   render() {
     return (
-      <div className="ui raised segment">
-        {/* <p>{this.props.text}</p> */}
-        <p>
-          {this.props.text.split("\n").map(function(item) {
+        <div className="ui raised segment">
+          <p><pre>{this.props.text}</pre></p>
+          {/* <p>
+            {this.props.text.split("\n").map(function(item) {
             return (
-              <span>
-                {item}
-                <br/>
-              </span>
+            <span>
+            {item}
+            <br/>
+            </span>
             )
-          })}
-        </p>
-      </div>
-    );
+            })}
+          </p> */}
+        </div>
+        );
   }
 }
