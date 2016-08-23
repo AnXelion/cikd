@@ -86,6 +86,9 @@ export default class TextArea extends Component {
       os: BrowserDetect.OS,
       createdAt: new Date()
     });
+
+    this.setState({savedTypingPatterns: newSavedTypingPatterns});
+
   }
 
   handleCompositionStart(event) {
@@ -99,6 +102,8 @@ export default class TextArea extends Component {
       os: BrowserDetect.OS,
       createdAt: new Date()
     });
+
+    this.setState({savedTypingPatterns: newSavedTypingPatterns});
   }
 
   handleCompositionEnd(event) {
@@ -112,6 +117,8 @@ export default class TextArea extends Component {
       os: BrowserDetect.OS,
       createdAt: new Date()
     });
+
+    this.setState({savedTypingPatterns: newSavedTypingPatterns});
   }
 
   handleSubmit() {
