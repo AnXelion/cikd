@@ -21,6 +21,7 @@ export default class TextArea extends Component {
     this.handleKeyDown = this.handleKeyDown.bind(this);
     this.handleInput = this.handleInput.bind(this);
     this.handleCompositionStart = this.handleCompositionStart.bind(this);
+    this.handleCompositionUpdate = this.handleCompositionUpdate.bind(this);
     this.handleCompositionEnd = this.handleCompositionEnd.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleRestart = this.handleRestart.bind(this);
@@ -106,6 +107,20 @@ export default class TextArea extends Component {
     this.setState({savedTypingPatterns: newSavedTypingPatterns});
   }
 
+  handleCompositionUpdate(event) {
+    var newSavedTypingPatterns = this.state.savedTypingPatterns.slice();
+    newSavedTypingPatterns.push({
+      key: event.data,
+      eventType: 'compositionUpdate',
+      owner: Meteor.userId(),
+      articleId: this.props._id,
+      os: BrowserDetect.OS,
+      createdAt: new Date()
+    });
+
+    this.setState({savedTypingPatterns: newSavedTypingPatterns});
+  }
+
   handleCompositionEnd(event) {
     // Meteor.call('inputs.compositionEnd', event.data, this.props._id, BrowserDetect.OS);
     var newSavedTypingPatterns = this.state.savedTypingPatterns.slice();
@@ -160,6 +175,7 @@ export default class TextArea extends Component {
               onInput={this.handleInput}
               onCompositionStart={this.handleCompositionStart}
               onCompositionEnd={this.handleCompositionEnd}
+              onCompositionUpdate={this.handleCompositionUpdate}
             >
             </textarea>
           </div>
